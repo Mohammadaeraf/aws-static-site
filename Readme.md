@@ -1,25 +1,14 @@
-# ☁️ AWS Responsive Static Portfolio
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![CloudFront](https://img.shields.io/badge/CloudFront-Secure-blue?style=for-the-badge&logo=amazon-cloudfront&logoColor=white)
-![Linux](https://img.shields.io/badge/MX_Linux-A81D33?style=for-the-badge&logo=debian&logoColor=white)
+graph TD
+    User([User Browser]) -- "HTTPS" --> R53{Route 53}
+    R53 -- "DNS Alias" --> CF[CloudFront Distribution]
+    CF -- "S3 Origin Access" --> S3[(S3 Bucket)]
 
-A high-availability portfolio website architected using the AWS Global Infrastructure and optimized for all devices.
+    subgraph AWS_Cloud [AWS Global Infrastructure]
+        R53
+        CF
+        S3
+    end
 
-## 🚀 Live Demo
-**[Click Here to Visit the Site](https://drb1333ec2o5.cloudfront.net)**
-
-## 🏗️ Architecture Diagram
-This diagram shows the secure flow from the user to the content hosted on AWS.
-
-```mermaid
-architecture-beta
-    group vpc(cloud)[AWS Cloud]
-
-    service s3(disk)[S3 Bucket] in vpc
-    service cf(cloud)[CloudFront] in vpc
-    service r53(internet)[Route 53] in vpc
-    service user(internet)[User Browser]
-
-    user -- "HTTPS Request" --> r53
-    r53 -- "DNS Alias" --> cf
-    cf -- "OAC Auth" --> s3
+    style AWS_Cloud fill:#f9f,stroke:#333,stroke-width:2px
+    style CF fill:#ff9900,color:#fff
+    style S3 fill:#ff9900,color:#fff
